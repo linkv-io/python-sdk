@@ -1,17 +1,13 @@
+# -*- coding: UTF-8 -*-
+
 from .config import config
 
 
-class _IM:
+class Im(object):
     def __init__(self):
-        self.cfg = config()
+        pass
 
 
-_im = None
-
-
-def im():
-    global _im
-    if _im:
-        return _im
-    _im = _IM()
-    return _im
+class LvIM(Im):
+    def __init__(self):
+        Im.__init__(self)

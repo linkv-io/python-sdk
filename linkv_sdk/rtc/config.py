@@ -1,4 +1,8 @@
+# -*- coding: UTF-8 -*-
+
 class _Config:
+    __slots__ = ['app_id', 'app_key']
+
     def __init__(self, app_id, app_key):
         self.app_id = app_id
         self.app_key = app_key

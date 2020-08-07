@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 import platform
 import os
 from requests import get

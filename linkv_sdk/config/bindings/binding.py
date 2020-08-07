@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 from ffi import dlopen_platform_specific, download
 from ctypes import c_char_p, c_void_p, cast
 

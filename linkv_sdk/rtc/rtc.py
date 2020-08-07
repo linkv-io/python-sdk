@@ -1,17 +1,13 @@
+# -*- coding: UTF-8 -*-
+
 from .config import config
 
 
-class _RTC:
+class Rtc(object):
     def __init__(self):
-        self.cfg = config()
+        pass
 
 
-_rtc = None
-
-
-def rtc():
-    global _rtc
-    if _rtc:
-        return _rtc
-    _rtc = _RTC()
-    return _rtc
+class LvRTC(Rtc):
+    def __init__(self):
+        Rtc.__init__(self)

@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from json import dumps
 
 import linkv_sdk
