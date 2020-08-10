@@ -20,7 +20,7 @@ python setup.py install --record log
 
 ## Uninstall
 ```sh
-cat log |sudo xargs rm -rf
+cat log |xargs rm -rf
 rm -rf build dist linkv_sdk.egg-info log
 ```
 

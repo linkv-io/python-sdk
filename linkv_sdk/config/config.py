@@ -8,8 +8,8 @@ from bindings.binding import download_library, binding
 from json import loads
 
 
-def init(app_id, app_secret, pool_size, version):
-    http(pool_size, version)
+def init(app_id, app_secret, version):
+    http(version)
     if not download_library():
         return False
     json_data = binding().decrypt(app_id, app_secret)

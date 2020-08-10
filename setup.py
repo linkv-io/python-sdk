@@ -5,7 +5,7 @@ import linkv_sdk
 tests_require = []
 extras_require = {}
 install_requires = [
-    'requests',
+    'requests'
 ]
 
 setup(
@@ -20,7 +20,7 @@ setup(
             'linkv_sdk_example = linkv_sdk.__main__:main',
         ],
     },
-    python_requires='>=2.7.16',
+    python_requires='>=2.7.9',
     extras_require=extras_require,
     install_requires=install_requires,
     tests_require=tests_require,
@@ -29,8 +29,9 @@ setup(
         'Operating System :: OS Independent',
         'Natural Language :: Chinese (Simplified)',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7.9',
         'Programming Language :: Python :: 2.7.16',
-        'Programming Language :: Python :: 2.8',
+        'Programming Language :: Python :: 2.7.18',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache-2.0 License',
