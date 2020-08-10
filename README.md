@@ -15,11 +15,13 @@ git clone https://github.com/linkv-io/python-sdk
 ## Install
 ```sh
 cd python-sdk
-python setup.py build && python setup.py install --record log
+python setup.py build
+python setup.py install --record log
 ```
 
 ## Uninstall
 ```sh
+cd python-sdk
 cat log |xargs rm -rf 
 rm -rf build dist linkv_sdk.egg-info log
 ```
