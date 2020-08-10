@@ -5,9 +5,36 @@ import json
 import time
 import hashlib
 from datetime import datetime
-
 from .config import config
 from linkv_sdk.http.http import http
+
+
+class OrderType(object):
+    __slots__ = ['idx']
+
+    def __init__(self, idx: int):
+        self.idx = idx
+
+    def string(self) -> str:
+        return str(self.idx)
+
+
+class PlatformType(object):
+    __slots__ = ['value']
+
+    def __init__(self, value: str):
+        self.value = value
+
+    def string(self) -> str:
+        return self.value
+
+
+OrderAdd = OrderType(1)
+OrderDel = OrderType(2)
+
+PlatformH5 = PlatformType('h5')
+PlatformANDROID = PlatformType('android')
+PlatformIOS = PlatformType('ios')
 
 
 class Live(object):
@@ -15,8 +42,8 @@ class Live(object):
         pass
 
     @staticmethod
-    def GetTokenByThirdUID(third_uid, a_id, user_name='', sex=-1, portrait_uri='', user_email='', country_code='',
-                           birthday=''):
+    def GetTokenByThirdUID(third_uid: str, a_id: str, user_name: str = '', sex: int = -1, portrait_uri: str = '',
+                           user_email: str = '', country_code: str = '', birthday: str = '') -> dict:
         nonce = genRandomString()
         params = {
             'nonce_str': nonce,
@@ -48,13 +75,13 @@ class Live(object):
 
         response = http().post(uri=uri, params=params)
 
-        if response.getcode() != 200:
+        if response.status != 200:
             return {
                 'status': False,
-                'error': 'httpStatusCode(%d) != 200' % response.getcode(),
+                'error': 'httpStatusCode(%d) != 200' % response.status,
             }
 
-        result = json.loads(response.read())
+        result = json.loads(str(response.data, encoding='utf8'))
         if int(result['status']) != 200:
             return {
                 'status': False,
@@ -68,19 +95,21 @@ class Live(object):
         }
 
     @staticmethod
-    def SuccessOrderByLiveOpenID(live_open_id, unique_id, order_type, gold, money, expr, platform_type, order_id):
+    def SuccessOrderByLiveOpenID(live_open_id: str, unique_id: str, order_type: OrderType, gold: int, money: int,
+                                 expr: int,
+                                 platform_type: PlatformType, order_id: str) -> dict:
         nonce = genRandomString()
         params = {
             'nonce_str': nonce,
             'app_id': config().app_key,
             'uid': live_open_id,
             'request_id': unique_id,
-            'type': str(order_type),
+            'type': order_type.string(),
             'value': str(gold),
             'money': str(money),
             'expriation': str(time.mktime(datetime.now().timetuple()) + expr * 86400),
             'channel': config().alias,
-            'platform': platform_type,
+            'platform': platform_type.string(),
         }
 
         if len(order_id) > 0:
@@ -92,13 +121,13 @@ class Live(object):
 
         response = http().post(uri=uri, params=params)
 
-        if response.getcode() != 200:
+        if response.status != 200:
             return {
                 'status': False,
-                'error': 'httpStatusCode(%d) != 200' % response.getcode(),
+                'error': 'httpStatusCode(%d) != 200' % response.status,
             }
 
-        result = json.loads(response.read())
+        result = json.loads(str(response.data, encoding='utf8'))
         if int(result['status']) != 200:
             return {
                 'status': False,
@@ -111,7 +140,8 @@ class Live(object):
         }
 
     @staticmethod
-    def ChangeGoldByLiveOpenID(live_open_id, unique_id, order_type, gold, expr, optional_reason=''):
+    def ChangeGoldByLiveOpenID(live_open_id: str, unique_id: str, order_type: OrderType, gold: int, expr: int,
+                               optional_reason: str = '') -> dict:
 
         nonce = genRandomString()
         params = {
@@ -119,7 +149,7 @@ class Live(object):
             'app_id': config().app_key,
             'uid': live_open_id,
             'request_id': unique_id,
-            'type': str(order_type),
+            'type': order_type.string(),
             'value': str(gold),
         }
         if expr > 0:
@@ -134,18 +164,21 @@ class Live(object):
 
         response = http().post(uri=uri, params=params)
 
-        if response.getcode() != 200:
+        if response.status != 200:
             return {
                 'status': False,
-                'error': 'httpStatusCode(%d) != 200' % response.getcode(),
+                'error': 'httpStatusCode(%d) != 200' % response.status,
             }
 
-        result = json.loads(response.read())
+        result = json.loads(str(response.data, encoding='utf8'))
 
-        return int(result['status']) == 200
+        return {
+            'status': True,
+            'ok': int(result['status']) == 200,
+        }
 
     @staticmethod
-    def GetGoldByLiveOpenID(live_open_id):
+    def GetGoldByLiveOpenID(live_open_id: str) -> dict:
         nonce = genRandomString()
         params = {
             'nonce_str': nonce,
@@ -158,13 +191,13 @@ class Live(object):
 
         response = http().get(uri=uri, params=params)
 
-        if response.getcode() != 200:
+        if response.status != 200:
             return {
                 'status': False,
-                'error': 'httpStatusCode(%d) != 200' % response.getcode(),
+                'error': 'httpStatusCode(%d) != 200' % response.status,
             }
 
-        result = json.loads(response.read())
+        result = json.loads(str(response.data, encoding='utf8'))
         if int(result['status']) != 200:
             return {
                 'status': False,
@@ -181,40 +214,41 @@ class LvLIVE(Live):
     def __init__(self):
         Live.__init__(self)
 
-    def GetTokenByThirdUID(self, third_uid, a_id, user_name='', sex=-1, portrait_uri='', user_email='', country_code='',
-                           birthday=''):
+    def GetTokenByThirdUID(self, third_uid: str, a_id: str, user_name: str = '', sex: int = -1, portrait_uri: str = '',
+                           user_email: str = '', country_code: str = '', birthday: str = '') -> dict:
         return super(LvLIVE, self).GetTokenByThirdUID(third_uid, a_id, user_name, sex, portrait_uri, user_email,
                                                       country_code, birthday)
 
-    def SuccessOrderByLiveOpenID(self, live_open_id, unique_id, order_type, gold, money, expr, platform_type, order_id):
+    def SuccessOrderByLiveOpenID(self, live_open_id: str, unique_id: str, order_type: OrderType, gold: int, money: int,
+                                 expr: int, platform_type: PlatformType, order_id: str) -> dict:
         return super(LvLIVE, self).SuccessOrderByLiveOpenID(live_open_id, unique_id, order_type, gold, money, expr,
                                                             platform_type, order_id)
 
-    def ChangeGoldByLiveOpenID(self, live_open_id, unique_id, order_type, gold, expr, optional_reason=''):
+    def ChangeGoldByLiveOpenID(self, live_open_id: str, unique_id: str, order_type: OrderType, gold: int, expr: int,
+                               optional_reason: str = '') -> dict:
         return super(LvLIVE, self).ChangeGoldByLiveOpenID(live_open_id, unique_id, order_type, gold, expr,
                                                           optional_reason)
 
-    def GetGoldByLiveOpenID(self, live_open_id):
+    def GetGoldByLiveOpenID(self, live_open_id: str) -> dict:
         return super(LvLIVE, self).GetGoldByLiveOpenID(live_open_id)
 
 
-def genRandomString():
-    container = ''.join(random.sample('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', 8))
-    container += str(int(time.mktime(datetime.now().timetuple())))
-    container += ''.join(random.sample('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', 8))
-    return container
+def genRandomString() -> str:
+    return '{}{}{}'.format(
+        ''.join(random.sample('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', 8)),
+        str(int(time.mktime(datetime.now().timetuple()))),
+        ''.join(random.sample('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', 8)))
 
 
-def genSign(params, md5_secret):
+def genSign(params: dict, md5_secret: str) -> str:
     data = __encode(params) + "&key=" + md5_secret
     obj = hashlib.new('md5')
-    obj.update(data)
+    obj.update(bytes(data, encoding='utf8'))
     return obj.hexdigest().lower()
 
 
-def __encode(params):
-    keys = params.keys()
-    keys.sort()
+def __encode(params: dict) -> str:
+    keys = sorted(params.keys())
     container = ''
     for k in keys:
         if len(container) > 0:

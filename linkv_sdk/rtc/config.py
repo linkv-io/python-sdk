@@ -3,7 +3,7 @@
 class _Config:
     __slots__ = ['app_id', 'app_key']
 
-    def __init__(self, app_id, app_key):
+    def __init__(self, app_id: str, app_key: str):
         self.app_id = app_id
         self.app_key = app_key
 
@@ -11,7 +11,7 @@ class _Config:
 _config = None
 
 
-def config():
+def config() -> _Config:
     return _config if _config is not None else None
 
 

@@ -7,7 +7,7 @@ from tempfile import gettempdir
 from ctypes import CDLL
 
 
-def _platform_file(name):
+def _platform_file(name: str) -> str:
     ext = ''
 
     if platform.uname()[0] == "Linux":
@@ -20,14 +20,14 @@ def _platform_file(name):
     return "lib{}.{}".format(name, ext)
 
 
-def dlopen_platform_specific(name, path):
+def dlopen_platform_specific(name: str, path: str) -> CDLL:
     return CDLL('{}/{}'.format(gettempdir() if path == "" else path, _platform_file(name)))
 
 
 DownloadURL = 'http://dl.linkv.fun/static/server'
 
 
-def download(name, path, version):
+def download(name: str, path: str, version: str) -> bool:
     filepath = '{}/{}'.format(gettempdir() if path == "" else path, _platform_file(name))
     if os.path.exists(filepath):
         return True

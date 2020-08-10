@@ -29,10 +29,10 @@ def main():
         return
     golds0 = r1['golds']
     print('golds0:%d' % golds0)
-    unique_id = '123123123'
+    unique_id = '123123123123'
     gold = 10
-    r2 = live.SuccessOrderByLiveOpenID(live_open_id, unique_id, linkv_sdk.OrderTypeAdd, gold, 10, 1,
-                                       linkv_sdk.PlatformTypeH5, '')
+    r2 = live.SuccessOrderByLiveOpenID(live_open_id, unique_id, linkv_sdk.OrderAdd, gold, 10, 1,
+                                       linkv_sdk.PlatformH5, '')
     if not r2['status']:
         print('live.SuccessOrderByLiveOpenID(%s)' % r2['error'])
         return
@@ -43,8 +43,8 @@ def main():
         print('(golds0+gold) != golds1')
         return
 
-    unique_id1 = '456456456'
-    ok = live.ChangeGoldByLiveOpenID(live_open_id, unique_id1, linkv_sdk.OrderTypeDel, gold, 1, 'test del')
+    unique_id1 = '456456456456'
+    ok = live.ChangeGoldByLiveOpenID(live_open_id, unique_id1, linkv_sdk.OrderDel, gold, 1, 'test del')
     if not ok:
         print('!ok')
         return

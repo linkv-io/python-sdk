@@ -3,11 +3,11 @@
 from .config import config
 
 
-class Rtc(object):
+class RTC(object):
     def __init__(self):
         pass
 
 
-class LvRTC(Rtc):
+class LvRTC(RTC):
     def __init__(self):
-        Rtc.__init__(self)
+        RTC.__init__(self)

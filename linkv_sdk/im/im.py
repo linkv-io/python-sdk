@@ -3,11 +3,11 @@
 from .config import config
 
 
-class Im(object):
+class IM(object):
     def __init__(self):
         pass
 
 
-class LvIM(Im):
+class LvIM(IM):
     def __init__(self):
-        Im.__init__(self)
+        IM.__init__(self)
