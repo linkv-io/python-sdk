@@ -260,8 +260,9 @@ class LvLIVE(Live):
     def __init__(self):
         Live.__init__(self)
 
-    def GetTokenByThirdUID(self, third_uid: str, a_id: str, user_name: str = '', sex: int = -1, portrait_uri: str = '',
-                           user_email: str = '', country_code: str = '', birthday: str = '') -> dict:
+    def GetTokenByThirdUID(self, third_uid: str, a_id: str, user_name: str = '', portrait_uri: str = '',
+                           sex: int = SexTypeUnknown, user_email: str = '', country_code: str = '',
+                           birthday: str = '') -> dict:
         return super(LvLIVE, self).GetTokenByThirdUID(third_uid, a_id, user_name, sex, portrait_uri, user_email,
                                                       country_code, birthday)
 
