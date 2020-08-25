@@ -133,7 +133,7 @@ class Live(object):
             if int(result['status']) == 200:
                 return {
                     'status': True,
-                    'golds': int(result['data']['livemeTokens']),
+                    'golds': int(result['data']['tokens']),
                 }
 
             if int(result['status']) == 500:
@@ -236,7 +236,7 @@ class Live(object):
             if int(result['status']) == 200:
                 return {
                     'status': True,
-                    'golds': int(result['data']['livemeTokens']),
+                    'golds': int(result['data']['tokens']),
                 }
 
             if int(result['status']) == 500:
