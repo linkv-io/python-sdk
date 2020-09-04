@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-import urllib3
 from urllib3 import response, PoolManager
 
 
@@ -13,14 +12,14 @@ class _HTTP:
 
     def get(self, uri: str = '', params: dict = {}, headers: dict = {}) -> response:
         header = {
-            'User-Agent': 'Python2 SDK v%s' % self.version,
+            'User-Agent': 'Python3 SDK v%s' % self.version,
         }
         header.update(headers)
         return self.http.request_encode_url('GET', uri, fields=params, headers=header)
 
     def post(self, uri: str = '', params: dict = {}, headers: dict = {}) -> response:
         header = {
-            'User-Agent': 'Python2 SDK v%s' % self.version,
+            'User-Agent': 'Python3 SDK v%s' % self.version,
         }
         header.update(headers)
         return self.http.request_encode_body('POST', uri, fields=params, headers=headers, encode_multipart=False)

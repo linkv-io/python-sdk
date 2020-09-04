@@ -11,7 +11,8 @@ class RTC(object):
         pass
 
     @staticmethod
-    def GenAuth() -> dict:
+    def genAuth() -> dict:
+
         now = str(int(time.mktime(datetime.now().timetuple())))
         data = '{}{}'.format(config().app_id, now)
         auth_mac = hmac.new(config().app_key.encode('utf-8'), data.encode('utf-8'), digestmod='SHA1')
@@ -27,5 +28,6 @@ class LvRTC(RTC):
     def __init__(self):
         RTC.__init__(self)
 
-    def GenAuth(self) -> dict:
-        return super(LvRTC, self).GenAuth()
+    def genAuth(self) -> dict:
+
+        return super(LvRTC, self).genAuth()

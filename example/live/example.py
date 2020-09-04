@@ -14,7 +14,7 @@ def main():
 
     third_uid = "test-py-tob"
     a_id = "test"
-    r = live.GetTokenByThirdUID(third_uid, a_id, user_name='test-py', sex=linkv_sdk.SexTypeUnknown,
+    r = live.getTokenByThirdUID(third_uid, a_id, user_name='test-py', sex=linkv_sdk.SexTypeUnknown,
                                 portrait_uri='http://meet.linkv.sg/app/rank-list/static/img/defaultavatar.cd935fdb.png')
 
     if not r['status']:
@@ -23,7 +23,7 @@ def main():
 
     print('token:%s' % r['live_token'])
     live_open_id = r['live_open_id']
-    r1 = live.GetGoldByLiveOpenID(live_open_id)
+    r1 = live.getGoldByLiveOpenID(live_open_id)
     if not r1['status']:
         print('live.GetGoldByLiveOpenID(%s)' % r1['error'])
         return
@@ -31,7 +31,7 @@ def main():
     print('golds0:%d' % golds0)
     order_id = ''
     gold = 10
-    r2 = live.SuccessOrderByLiveOpenID(live_open_id, linkv_sdk.OrderTypeAdd, gold, 10, 1,
+    r2 = live.successOrderByLiveOpenID(live_open_id, linkv_sdk.OrderTypeAdd, gold, 10, 1,
                                        linkv_sdk.PlatformTypeH5, order_id)
     if not r2['status']:
         print('live.SuccessOrderByLiveOpenID(%s)' % r2['error'])
@@ -43,12 +43,12 @@ def main():
         print('(golds0+gold) != golds1')
         return
 
-    ok = live.ChangeGoldByLiveOpenID(live_open_id, linkv_sdk.OrderTypeDel, gold, 1, 'test del')
+    ok = live.changeGoldByLiveOpenID(live_open_id, linkv_sdk.OrderTypeDel, gold, 1, 'test del')
     if not ok:
         print('!ok')
         return
 
-    r3 = live.GetGoldByLiveOpenID(live_open_id)
+    r3 = live.getGoldByLiveOpenID(live_open_id)
     if not r3['status']:
         print('live.GetGoldByLiveOpenID(%s)' % r3['error'])
         return
