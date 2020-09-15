@@ -39,7 +39,7 @@ class IM(object):
             'appkey': config().app_key,
             'appUid': third_uid,
             'appId': config().app_id,
-            'signature': sign,
+            'signature': cmimToken,
         }
 
         params = {
